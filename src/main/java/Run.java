@@ -17,6 +17,14 @@ public class Run {
         employeeList.add(employee3);
         employeeList.add(employee4);
 
+        // tworzenie stringa ze wszystkich imion oddzielony przecinkami
+        String allNamesSeparatedByComma = employeeList.stream()
+                .map(employee -> employee.getName())
+                .reduce((name, name2) -> name + ", " + name2)
+                .get();
+
+        System.out.println(allNamesSeparatedByComma);
+
         // zwróci optionala ale jak lista będzie pusta to suma będzie null
         Integer sumOfAllAges = employeeList.stream()
                 .map(employee -> employee.getAge())
