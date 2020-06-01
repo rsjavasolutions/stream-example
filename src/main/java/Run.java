@@ -17,7 +17,25 @@ public class Run {
         employeeList.add(employee3);
         employeeList.add(employee4);
 
+        // zwróci optionala ale jak lista będzie pusta to suma będzie null
+        Integer sumOfAllAges = employeeList.stream()
+                .map(employee -> employee.getAge())
+                .reduce(Integer::sum)
+                //.reduce((age1, age2) -> age1 + age2)
+                .get();
 
+        // zwróci sume, jak lista będzie pusta zwróci 0 a nie null
+        Integer sumOfAllAges2 = employeeList.stream()
+                .map(employee -> employee.getAge())
+                .reduce(0, Integer::sum);
+
+        //suma bez mapowania, odmyślna wartość 0
+        Integer sumOfAllAges3 = employeeList.stream()
+                .reduce(0, (age, employee) -> age + employee.getAge(), Integer::sum);
+
+        System.out.println(sumOfAllAges3);
+
+        System.out.println(sumOfAllAges);
 
         boolean isEveryNameStartsWithJ = employeeList.stream()
                 // wszystkie obiekty w stream muszą spełniać warunek
@@ -34,18 +52,15 @@ public class Run {
                 //w liście nie ma imion na "Z" więc zwróci TRUE
                 .noneMatch(employee -> employee.getName().startsWith("Z"));
 
-
         System.out.println(isEveryNameStartsWithJ);
         System.out.println(isAnyNameStartsWithJ);
         System.out.println(isNoneNameStartsWithZ);
-
 
         Employee youngestEmployee = employeeList.stream()
                 .min(Comparator.comparing(employee -> employee.getAge())).get();
 
         Employee oldestEmployee = employeeList.stream()
                 .max(Comparator.comparing(employee -> employee.getAge())).get();
-
 
         System.out.println(youngestEmployee);
         System.out.println(oldestEmployee);
@@ -57,7 +72,6 @@ public class Run {
 
         System.out.println(sortedByAge);
 
-
         List<List<String>> skillsList = employeeList.stream()
                 .map(employee -> employee.getSkills())
                 .collect(Collectors.toList());
@@ -68,10 +82,8 @@ public class Run {
                 .distinct()
                 .collect(Collectors.toList());
 
-
         System.out.println(skillsList);
 
         System.out.println(allSkillsFlatMap);
-
     }
 }
